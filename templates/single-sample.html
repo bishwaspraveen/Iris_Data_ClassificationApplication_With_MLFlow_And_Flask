@@ -1,0 +1,102 @@
+<!-- Includes the layout template which is common for all the pages in the application-->
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- Designing the HTML webpage for single sample prediction mode -->
+<div class="container" style="margin-top: 140px; margin-bottom: 120px;">
+    <div class="card">
+        <div class="card-header text-center" style="background-color: darksalmon;">
+            <h4><b>Iris Data Classifier </b></h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: lemonchiffon;">
+                            <h5><b>Data Input (Features)</b></h5>
+                        </div>
+
+                        <form id="inputForm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Sepal Length</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="sepallength" id="sepalLength" value="0">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Sepal Width</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="sepalwidth" id="sepalWidth" value="0">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Petal Length</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="petallength" id="petalLength" value="0">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="control-label">Petal Width</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" name="petalwidth" id="petalWidth" value="0">
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <!-- Once the evaluate button is clicked, the webpage looks for getResult() function along with the data which is ID'd bt name 'file' above to pass it onto the backend application managed by MLFlow server-->
+                                    <button type="button" class="btn btn-outline-dark" onclick="getResult()" value="submit"
+                                        style="cursor: pointer;">Evaluate Prediction</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header text-center" style="background-color: lemonchiffon;">
+                            <h5><b>Classification Result</b></h5>
+                        </div>
+                        <div class="card-body text-center" style="background-color: rgb(190, 244, 240);">
+                                <p><b>Predicted class for the input data is</b></p>  
+                                <span style="color:mediumslateblue; font-size: 50px;">
+                                    <!-- An empty space here is left to fill in the results once the response from the server is recieved and is processed for display-->
+                                    <p id="result"><b></b></p>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- This is the JavaScript part which sends an AJAX request to the application on the backend to compute the necesary results and send it a response back-->
+<script>
+    function getResult(){
+        $.ajax({
+           type: "POST",
+            // this is the URL endpoint to which the AJAX request is sent to compute the result for the data provided
+           url : '/evaluateSingleSampleMode',
+           data: $("#inputForm").serialize(), // serializes the form's elements.
+            //Upon the response is successfully recieved from the application, the response is processed and displayed in HTML in this part of the code
+           success: function(data)
+           {
+              $("#result").html(data); // show response from the php script.
+           },
+           error: function(req, err){ console.log('my message' + err); }
+         });
+    }
+</script>
+
+
+{% endblock%}

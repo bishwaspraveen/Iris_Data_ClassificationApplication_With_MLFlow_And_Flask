@@ -1,0 +1,80 @@
+<!-- Includes the layout template which is common for all the pages in the application-->
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- Designing the HTML webpage for batch prediction mode -->
+<div class = "container" style="margin-top: 140px; margin-bottom: 320px;">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: darksalmon;">
+                            <h4><b>Iris Data Classifier (Batch Prediction)</b></h4>
+                        </div>
+                        <form id="inputForm">
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile04" name="file">
+                                    <label class="custom-file-label" style="opacity: 0.7;" for="inputGroupFile04">Upload the file for validation (.csv)</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <!-- Once the evaluate button is clicked, the webpage looks for getResult() function along with the data which is ID'd bt name 'file' above to pass it onto the backend application managed by MLFlow server-->
+                                        <button class="btn btn-info" type="button" onclick="getResult()" value="submit">Evaluate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color: lemonchiffon;">
+                            <h4><b>Prediction Results</b></h4>
+                        </div>
+                        <div class="card-body text-center" style="background-color: rgb(190, 244, 240);">
+                            <p><b>Predicted classes for all the samples in the file are as follows :</b></p>  
+                            <span style="color:mediumslateblue;">
+                                <!-- An empty space here is left to fill in the results once the response from the server is recieved and is processed for display-->
+                                <p id="result"><b></b></p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- This is the JavaScript part which sends an AJAX request to the application on the backend to compute the necesary results and send it a response back-->
+<script>
+    function getResult(){
+        var form_data = new FormData($('#inputForm')[0]);
+        $.ajax({
+            type : "POST",
+            // this is the URL endpoint to which the AJAX request is sent to compute the result for the data provided
+            url : "/evaluateBatchProcessing",
+            data : form_data,
+            contentType : false,
+            cache : false,
+            processData : false,
+            //Upon the response is successfully recieved from the application, the response is processed and displayed in HTML in this part of the code
+            success : function(data){
+                var tableHTML = '<table class="table table-bordered">';
+                tableHTML += '<thead><tr><th>Index</th><th>Predicted Class</th></tr></thead><tbody>';
+                for(var i=0; i<data.length; i++){
+                    tableHTML += '<tr><td>' + data[i].sample_index + '</td><td>' + data[i].predicted_class + '</td></tr>';
+                }
+                tableHTML += '</tbody></table>';
+                $("#result").html(tableHTML);
+            },
+        });
+    }
+</script>
+
+{% endblock%}
+

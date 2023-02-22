@@ -1,0 +1,19 @@
+<!-- Includes the layout template which is common for all the pages in the application-->
+{% extends "layout.html" %}
+
+<!-- Re-defining the block conteny according to the needs of the home page. This can be defined differently for different pages as every page reflects different content-->
+{% block content %}
+<!-- Includes the huge text at the top of the home page using Jumbotron-->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4 text-center"><em>Welcome To Our Iris Data Classifier Application </em></h1>
+      <p style="color:rgba(217, 84, 39, 0.767);font-size:28px;" class="lead text-center"><em>Run your inputs in two modes : Single Sample Mode and Batch Processing Mode</em></p>
+    </div>
+</div>
+
+<!-- Including the highlights cards in the home page-->
+<div class = "container">
+    {% include "highlights.html" %}
+</div>
+
+{% endblock %} 

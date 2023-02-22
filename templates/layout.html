@@ -1,0 +1,59 @@
+<!-- This html basically designs elements present in our webpage-->
+<!doctype html>
+
+<html>
+    <style>
+        .fa {
+            padding: 15px;
+            font-size: 30px;
+            width: 30px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 30%;
+            color : black;
+        }
+        .fa:hover {
+            opacity: 0.7;
+        }
+        .foot {
+            text-align: center;
+            padding-top: 10px;
+            margin-top: 4%;
+            background-color: #888993b9;
+            border-top: 1px solid #0b0b0b;
+        }
+    </style>
+    <head>
+        {% block head %}
+        <!-- The links necessary to import / use bootstrap and jquery in th html file for styling (Links available in bootstrap 4 documentation online) -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="/static/css/layout.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {% endblock %}
+    </head>
+
+    <body>
+        <!-- This section composes of all the content displayed (header, body and footer section) in our web application -->
+        <section class = "content">
+            <!-- including the header design which is modularly designed in header-navbar.html -->
+            <header>
+                {% include "header-navbar.html" %}
+            </header>
+
+            <!-- This {block} is left empty because the content in the body section chnages every time a button is clicked or a sub-webpage is triggered by an event. This block is designed individually by every webpage through different html files -->
+            {% block content %}
+            {% endblock %}
+        </section>
+
+        <!-- This is the designed footer which exists accross all the webpages in the designed application-->
+        <footer>
+            <div class = "foot text-center">
+                <p><em><mark>Designed by Bishwas Praveen </mark></em> <a href="https://github.com/bishwaspraveen" class="fa fa-github"></a><a href="https://www.linkedin.com/in/bishwas-praveen/" class="fa fa-linkedin"></a></p>
+            </div>
+        </footer>
+    </body>
+</html>

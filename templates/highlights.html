@@ -1,0 +1,31 @@
+<!-- Styling the two cards present to place them at the center of the webpage using CSS-->
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+}
+</style>
+<!-- Adding two cards using bootstrap-->
+<div class="row d-flex justify-content-center text-center">
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-body">
+        <img class="card-img-top" src="/static/images/single-sample.jpg" alt="Card image cap">
+        <h5 class="card-title">Single Sample Mode</h5>
+        <p class="card-text">Get class prediction one sample at a time.</p>
+        <a href="/single-sample" class="btn btn-outline-danger text-center">Let's Go!</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-body">
+        <img class="card-img-top" src="/static/images/batch-mode.jpg" alt="Card image cap">
+        <h5 class="card-title">Batch Processing Mode</h5>
+        <p class="card-text">Evaluate predictions in batch mode by uploading a file.</p>
+        <a href="/batch-processing" class="btn btn-outline-danger text-center">Let's Go!</a>
+      </div>
+    </div>
+  </div>
+</div>
